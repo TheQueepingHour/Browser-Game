@@ -1,0 +1,7 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+main {
+    outline: 1px solid red;
+}
