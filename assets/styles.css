@@ -1,7 +1,22 @@
 body {
     margin: 0;
     padding: 0;
+    background: linear-gradient(to right, silver, white, silver)
 }
 main {
     outline: 1px solid red;
+    height: 60vh;
+    max-height: 75vh;
+}
+footer {
+    outline: 1px solid green;
+    height: 10vh;
+    max-height: 15vh;
+}
+div {
+    outline: 1px solid orange;
+}
+header {
+    background: silver;
+    color: cyan;
 }
