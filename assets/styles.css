@@ -10,8 +10,9 @@ main {
 }
 footer {
     outline: 1px solid green;
-    height: 10vh;
-    max-height: 15vh;
+    height: 20vh;
+    max-height: 25vh;
+    overflow: hidden;
 }
 div {
     outline: 1px solid orange;
