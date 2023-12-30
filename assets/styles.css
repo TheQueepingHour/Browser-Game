@@ -1,3 +1,4 @@
+/*Body Styling*/
 body {
     margin: 0;
     padding: 0;
@@ -16,8 +17,12 @@ footer {
 }
 div {
     outline: 1px solid orange;
+    height: 15vh;
+    max-height: 20vh;
 }
 header {
     background: silver;
     color: cyan;
 }
+
+/*Styles for divs containing the player "sticks"*/
