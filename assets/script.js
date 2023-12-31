@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     //New function for determining button ID based on bundle
     function bundleButtonID(bundleID){
-
+        let playerNumber = bundleID.charAt(1)
+        let buttonNumber = bundleID.includes("2") ? "2Btn" : "Btn"
     }
 
     //Turn based display & functionality
