@@ -2,25 +2,35 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, silver, white, silver);
+    background: #839791;
+    background-image: url('../assets/images/forestbackdrop.png');
+    background-size: cover;
+    background-attachment: fixed;
 }
 main {
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
     height: 60vh;
     max-height: 75vh;
 }
 footer {
-    outline: 1px solid green;
-    height: 20vh;
-    max-height: 25vh;
+    /* outline: 1px solid green; */
+    height: 15vh;
+    max-height: 20vh;
     overflow: hidden;
 }
-div {
-    outline: 1px solid orange;
-}
 header {
-    background: silver;
-    color: cyan;
+    color: #EFD5C3;
 }
-
-/*Styles for divs containing the player "sticks"*/
+#pvpDiv1, #pvpDiv2 {
+    border-bottom: 2px solid #896978;
+}
+#pvpDiv2 {
+    color: white;
+}
+/* #p1BundleAmount, #p2BundleAmount, #p1Bundle2Amount, #p2Bundle2Amount {
+    color: ;
+} */
+#infoButton {
+    background: #ffd4ca;
+    border: 3px solid white;
+}

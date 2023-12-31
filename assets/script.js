@@ -34,16 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('bundle change occurred')
                 turnSwitch()
             }
-            if(stickBundle[bundle] > maxSticks){
-
-            }
-            
         }
         prevBundleAmount = {...stickBundle}
     }
     //New function for determining button ID based on bundle
     function bundleButtonID(bundleID){
-        
+
     }
 
     //Turn based display & functionality
@@ -55,10 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!turnDiv) {
             turnDiv = document.createElement('div')
             turnDiv.setAttribute('id', 'turnDiv')
-            turnDiv.setAttribute('class', 'fs-4 text-center p-4')
+            turnDiv.setAttribute('class', 'fs-4 text-center pb-4')
             turnSec.appendChild(turnDiv)
         }
-        return turnDiv.textContent = currentTurn
+        // return turnDiv.textContent = currentTurn
+        if(currentPlayer === "Player 1") {
+            turnDiv.setAttribute('style', 'color: black')
+            return turnDiv.textContent = currentTurn
+        } else if (currentPlayer === "Player 2") {
+            turnDiv.setAttribute('style', 'color: white')
+            return turnDiv.textContent = currentTurn
+        }
     }
     //Display starting player's turn (player 1)
     turnDisplay()
@@ -121,9 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
             footer.removeChild(infoDiv)
         } else {
             infoDiv = document.createElement('div')
-            infoDiv.textContent = "Game Info"
-            infoDiv.setAttribute('class', 'container-xl flex-grow-1')
+            infoDiv.textContent = "Sticks is a turn based player vs player game that is very simple. Each player is given two bundles, and each bundle can hold up to 4 sticks. Players will take turns adding their amount of sticks to the other player(without losing their own), until the player reaches 4 sticks. If a bundle goes over 4 sticks, their bundle will break and cannot be used for giving/taking. The game is won if you break both of the opponents bundles. If a player loses one of their bundles, that bundle is destroyed until the player makes a split. A split is a move that will divide your current sticks into 2 equal bundles and reinstate your broken bundle. However, a split can only be performed on bundles that have an even number of sticks(E.g. A player can split a bundle of 2 or 4, but not 1 or 3). For each turn, players will click on one of their opponents bundles to add to, and then choose which of their bundles that will be added to the other player’s bundle."
+            infoDiv.setAttribute('class', 'container-xl flex-grow-1 overflow-scroll')
             infoDiv.setAttribute('id', 'gameInfo')
+            infoDiv.setAttribute('style', 'background: #839791')
             footer.append(infoDiv)
         }
     })
