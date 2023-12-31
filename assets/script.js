@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let bundle in stickBundle) {
             let textTag = document.getElementById(`${bundle}`)
             textTag.textContent = stickBundle[bundle]
-            
         }
     }
     handleBundles()
@@ -35,8 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('bundle change occurred')
                 turnSwitch()
             }
+            if(stickBundle[bundle] > maxSticks){
+
+            }
+            
         }
         prevBundleAmount = {...stickBundle}
+    }
+    //New function for determining button ID based on bundle
+    function bundleButtonID(bundleID){
+        
     }
 
     //Turn based display & functionality
@@ -53,10 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return turnDiv.textContent = currentTurn
     }
-
     //Display starting player's turn (player 1)
     turnDisplay()
-
     //Turn switching function
     function turnSwitch() {
         currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1"
@@ -67,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', () => {
         stickCheck()
     })
+    
     
     //Function for adding sticks
     //Store variable for current selected amount
@@ -82,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             stickCheck()
         }
     }
-
     //Event listeners for buttons
     let button1 = document.getElementById('p1BundleBtn')
     button1.addEventListener('click', () => {
