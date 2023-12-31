@@ -33,12 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(stickBundle[bundle] !== prevBundleAmount[bundle]){
                 //test log
                 console.log('bundle change occurred')
-                if(currentTurn === "Player 1's turn!"){
-                    currentTurn = "Player 2's turn!"
-                } else {
-                    currentTurn = "Player 1's turn!"
-                }
-                turnDisplay()
+                turnSwitch()
             }
         }
         prevBundleAmount = {...stickBundle}
@@ -46,7 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Turn based display & functionality
     let turnSec = document.getElementById('turnSec')
-    let currentTurn = "Player 1's turn!"
+    let currentPlayer = "Player 1"
+    let currentTurn = `${currentPlayer}'s turn!`
     function turnDisplay() {
         let turnDiv = document.getElementById('turnDiv')
         if(!turnDiv) {
@@ -61,6 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //Display starting player's turn (player 1)
     turnDisplay()
 
+    //Turn switching function
+    function turnSwitch() {
+        currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1"
+        currentTurn = `${currentPlayer}'s turn!`
+        turnDisplay()
+    }
     //Event listener for turn changing
     document.addEventListener('click', () => {
         stickCheck()
