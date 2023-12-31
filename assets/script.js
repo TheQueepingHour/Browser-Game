@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let initialSticks = 1;
     //Maximum amount of sticks per bundle
     let maxSticks = 4;
-
-    
     //Object containing bundle values
     let stickBundle = {
         p1BundleAmount: initialSticks,
@@ -15,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         p1Bundle2Amount: initialSticks,
         p2Bundle2Amount: initialSticks
     }
+    //Object containing previous amounts of sticks
+    let prevBundleAmount = {...stickBundle}
 
 
     //Function for showing amount of sticks
@@ -26,6 +26,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     handleBundles()
+
+    //Check for changes in stick amount
+    function stickCheck() {
+        for (let bundle in stickBundle) {
+            if(stickBundle[bundle] !== prevBundleAmount[bundle]){
+                //test log
+                console.log('bundle change occurred')
+                if(currentTurn === "Player 1's turn!"){
+                    currentTurn = "Player 2's turn!"
+                } else {
+                    currentTurn = "Player 1's turn!"
+                }
+                turnDisplay()
+            }
+        }
+        prevBundleAmount = {...stickBundle}
+    }
+
+    //Turn based display & functionality
+    let turnSec = document.getElementById('turnSec')
+    let currentTurn = "Player 1's turn!"
+    function turnDisplay() {
+        let turnDiv = document.getElementById('turnDiv')
+        if(!turnDiv) {
+            turnDiv = document.createElement('div')
+            turnDiv.setAttribute('id', 'turnDiv')
+            turnDiv.setAttribute('class', 'fs-4 text-center p-4')
+            turnSec.appendChild(turnDiv)
+        }
+        return turnDiv.textContent = currentTurn
+    }
+
+    //Display starting player's turn (player 1)
+    turnDisplay()
+
+    //Event listener for turn changing
+    document.addEventListener('click', () => {
+        stickCheck()
+    })
     
     //Function for adding sticks
     //Store variable for current selected amount
@@ -38,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stickBundle[currentBundle] += stickBundle[bundle]
             currentBundle = null
             handleBundles()
+            stickCheck()
         }
     }
 
@@ -60,35 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let button4 = document.getElementById('p2Bundle2Btn')
     button4.addEventListener('click', () => {
         handleSticks('p2Bundle2Amount')
-    })
-
-    //
-    //Turn based display & functionality
-    //
-    let mainSec = document.getElementById('mainSec')
-    function turnDisplay(playerTurn) {
-        let turnDiv = document.getElementById('turnDiv')
-        if(!turnDiv) {
-            turnDiv = document.createElement('div')
-            turnDiv.setAttribute('id', 'turnDiv')
-            mainSec.appendChild(turnDiv)
-        }
-        turnDiv.textContent = playerTurn
-    }
-
-    //Display starting player's turn (player 1)
-    turnDisplay("Player 1's turn!")
-
-    //Event listener for turn changing
-    document.addEventListener('click', (event) => {
-        if(event.target.id.includes('BundleBtn')){
-            let currentTurn = turnDisplay()
-            if(currentTurn === "Player 1's turn!"){
-                turnDisplay("Player 2's turn!")
-            } else {
-                turnDisplay("Player 1's turn!")
-            }
-        }
     })
 
 
