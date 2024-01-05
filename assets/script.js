@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         p1Bundle2Amount: initialSticks,
         p2Bundle2Amount: initialSticks
     }
+    let p1BundleAmount = document.getElementById('p1BundleAmount')
+    p1BundleAmount = initialSticks
     //Object containing previous amounts of sticks
     let prevBundleAmount = {...stickBundle}
 
@@ -34,18 +36,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('bundle change occurred')
                 turnSwitch()
             }
+            //break player bundle after they reach max sticks
             if(stickBundle[bundle] > maxSticks) {
                 bundleBreak(bundle)
             }
         }
         prevBundleAmount = {...stickBundle}
     }
+    //Event listener for turn changing
+    document.addEventListener('click', () => {
+        stickCheck()
+    })
     //New function for determining button ID based on bundle
     function bundleButtonID(bundleID){
         let playerNumber = bundleID.charAt(1)
-        let buttonNumber = bundleID.includes("2") ? "2Btn" : "Btn"
+        let buttonNumber = bundleID.includes("2", 7) ? "2Btn" : "Btn"
+        console.log(buttonNumber)
         return `p${playerNumber}Bundle${buttonNumber}`
     }
+
+    //New function for getting bundle IDs 
+    function playerBundleID() {
+        let currentPlayer = "Player 1"
+        if(currentPlayer === "Player 1") {
+            console.log(currentPlayer)
+            return ['p1BundleAmount', 'p1Bundle2Amount']
+        } else if (currentPlayer === "Player 2") {
+            console.log(currentPlayer)
+            return ['p2BundleAmount', 'p2Bundle2Amount']
+        }
+    }
+    playerBundleID()
 
     //Turn based display & functionality
     let turnSec = document.getElementById('turnSec')
@@ -75,10 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentTurn = `${currentPlayer}'s turn!`
         turnDisplay()
     }
-    //Event listener for turn changing
-    document.addEventListener('click', () => {
-        stickCheck()
-    })
+    //Function to determine which buttons to disable at a given time
     
     
     //Function for adding sticks
@@ -89,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentBundle === null) {
             currentBundle = bundle
         } else {
-            stickBundle[currentBundle] += stickBundle[bundle]
+            stickBundle[bundle] += stickBundle[currentBundle]
             currentBundle = null
             handleBundles()
             stickCheck()
@@ -119,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function bundleBreak(bundle) {
         let buttonID = bundleButtonID(bundle)
         let button = document.getElementById(buttonID)
-
+        console.log(buttonID, button)
         if(button) {
             button.disabled = true;
         }
@@ -136,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             footer.removeChild(infoDiv)
         } else {
             infoDiv = document.createElement('div')
-            infoDiv.textContent = "gameinfo"
+            infoDiv.textContent = `Sticks is a turn based player vs player game that is very simple.\n\ Each player is given two bundles, and each bundle can hold up to 4 sticks. Players will take turns adding their amount of sticks to the other player(without losing their own), until the player reaches 4 sticks. If a bundle goes over 4 sticks, their bundle will break and cannot be used for giving/taking. The game is won if you break both of the opponents bundles. If a player loses one of their bundles, that bundle is destroyed until the player makes a split. A split is a move that will divide your current sticks into 2 equal bundles and reinstate your broken bundle. However, a split can only be performed on bundles that have an even number of sticks(E.g. A player can split a bundle of 2 or 4, but not 1 or 3). For each turn, players will click on one of their opponents bundles to add to, and then choose which of their bundles that will be added to the other player’s bundle.`
             infoDiv.setAttribute('class', 'container-xl flex-grow-1 overflow-scroll')
             infoDiv.setAttribute('id', 'gameInfo')
             infoDiv.setAttribute('style', 'background: #839791')
