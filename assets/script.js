@@ -13,8 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         p1Bundle2Amount: initialSticks,
         p2Bundle2Amount: initialSticks
     }
-    let p1BundleAmount = document.getElementById('p1BundleAmount')
-    p1BundleAmount = initialSticks
+    
     //Object containing previous amounts of sticks
     let prevBundleAmount = {...stickBundle}
 
