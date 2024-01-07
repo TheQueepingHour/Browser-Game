@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //Object containing previous amounts of sticks
     let prevBundleAmount = {...stickBundle}
 
+    //Moved button variables
+    let button1 = document.getElementById('p1BundleBtn')
+    let button2 = document.getElementById('p2BundleBtn')
+    let button3 = document.getElementById('p1Bundle2Btn')
+    let button4 = document.getElementById('p2Bundle2Btn')
+
 
     //Function for showing amount of sticks
     function handleBundles() {
@@ -54,18 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return `p${playerNumber}Bundle${buttonNumber}`
     }
 
-    //New function for getting bundle IDs 
-    function playerBundleID() {
-        let currentPlayer = "Player 1"
-        if(currentPlayer === "Player 1") {
-            console.log(currentPlayer)
-            return ['p1BundleAmount', 'p1Bundle2Amount']
-        } else if (currentPlayer === "Player 2") {
-            console.log(currentPlayer)
-            return ['p2BundleAmount', 'p2Bundle2Amount']
-        }
-    }
-    playerBundleID()
 
     //Turn based display & functionality
     let turnSec = document.getElementById('turnSec')
@@ -79,13 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
             turnDiv.setAttribute('class', 'fs-4 text-center pb-4')
             turnSec.appendChild(turnDiv)
         }
+        enableButtons(null)
         if(currentPlayer === "Player 1") {
             turnDiv.setAttribute('style', 'color: black')
+            // button2.disabled = true
+            // button4.disabled = true
             return turnDiv.textContent = currentTurn
         } else if (currentPlayer === "Player 2") {
             turnDiv.setAttribute('style', 'color: white')
+            // button1.disabled = true
+            // button3.disabled = true
             return turnDiv.textContent = currentTurn
         }
+
     }
     //Display starting player's turn (player 1)
     turnDisplay()
@@ -93,9 +93,39 @@ document.addEventListener('DOMContentLoaded', () => {
     function turnSwitch() {
         currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1"
         currentTurn = `${currentPlayer}'s turn!`
+        console.log('turn switched to ', currentPlayer)
         turnDisplay()
     }
-    //Function to determine which buttons to disable at a given time
+
+    //Function to enable/disabled buttons
+    function enableButtons(button) {
+        if(button === button1){
+            // button3.disabled = true
+            if(currentPlayer === "Player 1"){
+                button3.disabled = true
+                button2.disabled = false
+                button4.disabled = false
+            } else if(currentPlayer === "Player 2"){
+                button1.disabled = false
+                button3.disabled = false
+            }
+        } else if(button === button3){
+            button1.disabled = true
+            if(currentPlayer === "Player 1"){
+                button2.disabled = false
+                button4.disabled = false
+            } else if(currentPlayer === "Player 2"){
+                button1.disabled = false
+                button3.disabled = false
+            }
+        } else if(button === button2){
+            button4.disabled = true
+            
+        } else if(button === button4){
+            button2.disabled = true
+        }
+        
+    }
     
     
     //Function for adding sticks
@@ -113,35 +143,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     //Event listeners for buttons
-    let button1 = document.getElementById('p1BundleBtn')
     button1.addEventListener('click', () => {
         handleSticks('p1BundleAmount')
+        enableButtons(button1)
+        button1.disabled = true
     })
-
-    let button2 = document.getElementById('p2BundleBtn')
+    
     button2.addEventListener('click', () => {
         handleSticks('p2BundleAmount')
+        enableButtons(button2)
+        button2.disabled = true
     })
-
-    let button3 = document.getElementById('p1Bundle2Btn')
+    
     button3.addEventListener('click', () => {
         handleSticks('p1Bundle2Amount')
+        enableButtons(button3)
+        button3.disabled = true
     })
-
-    let button4 = document.getElementById('p2Bundle2Btn')
+    
     button4.addEventListener('click', () => {
         handleSticks('p2Bundle2Amount')
+        enableButtons(button4)
+        button4.disabled = true
     })
 
+    //Breaks bundle(s) when they exceed max sticks
     function bundleBreak(bundle) {
         let buttonID = bundleButtonID(bundle)
         let button = document.getElementById(buttonID)
         console.log(buttonID, button)
         if(button) {
-            button.disabled = true;
+            button.disabled = true
+            button.setAttribute('class', 'brokenBundle')
+            console.log(button.classList)
         }
     }
 
+    //Win condition logic
+    
 
     //Button Logic
     let footer = document.getElementById('pageFoot')

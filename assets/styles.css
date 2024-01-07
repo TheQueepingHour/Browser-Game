@@ -6,6 +6,7 @@ body {
     background-image: url('../assets/images/forestbackdrop.png');
     background-size: cover;
     background-attachment: fixed;
+    font-family: 'DM Sans', sans-serif !important;
 }
 main {
     /* outline: 1px solid red; */
@@ -20,6 +21,9 @@ footer {
 }
 header {
     color: #EFD5C3;
+}
+h1 {
+    font-family: 'Tektur', sans-serif !important;
 }
 #pvpDiv1, #pvpDiv2 {
     border-bottom: 2px solid #896978;
