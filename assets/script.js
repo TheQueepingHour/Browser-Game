@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let bundle in stickBundle) {
             let textTag = document.getElementById(`${bundle}`)
             textTag.textContent = stickBundle[bundle]
+            textTag.append('  |')
         }
     }
     handleBundles()
@@ -47,10 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         prevBundleAmount = {...stickBundle}
+        
     }
     //Event listener for turn changing
     document.addEventListener('click', () => {
         stickCheck()
+        //win condition
+        if(button1.classList.contains("brokenBundle") && button3.classList.contains("brokenBundle")){
+            winCondition("Player 2")
+        }else if(button2.classList.contains("brokenBundle") && button4.classList.contains("brokenBundle")){
+            winCondition("Player 1")
+        }
     })
     //New function for determining button ID based on bundle
     function bundleButtonID(bundleID){
@@ -73,16 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
             turnDiv.setAttribute('class', 'fs-4 text-center pb-4')
             turnSec.appendChild(turnDiv)
         }
-        enableButtons(null)
+        
         if(currentPlayer === "Player 1") {
             turnDiv.setAttribute('style', 'color: black')
-            // button2.disabled = true
-            // button4.disabled = true
             return turnDiv.textContent = currentTurn
         } else if (currentPlayer === "Player 2") {
             turnDiv.setAttribute('style', 'color: white')
-            // button1.disabled = true
-            // button3.disabled = true
             return turnDiv.textContent = currentTurn
         }
 
@@ -97,36 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         turnDisplay()
     }
 
-    //Function to enable/disabled buttons
-    function enableButtons(button) {
-        if(button === button1){
-            // button3.disabled = true
-            if(currentPlayer === "Player 1"){
-                button3.disabled = true
-                button2.disabled = false
-                button4.disabled = false
-            } else if(currentPlayer === "Player 2"){
-                button1.disabled = false
-                button3.disabled = false
-            }
-        } else if(button === button3){
-            button1.disabled = true
-            if(currentPlayer === "Player 1"){
-                button2.disabled = false
-                button4.disabled = false
-            } else if(currentPlayer === "Player 2"){
-                button1.disabled = false
-                button3.disabled = false
-            }
-        } else if(button === button2){
-            button4.disabled = true
-            
-        } else if(button === button4){
-            button2.disabled = true
-        }
-        
-    }
-    
+
     
     //Function for adding sticks
     //Store variable for current selected amount
@@ -142,30 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stickCheck()
         }
     }
-    //Event listeners for buttons
-    button1.addEventListener('click', () => {
-        handleSticks('p1BundleAmount')
-        enableButtons(button1)
-        button1.disabled = true
-    })
     
-    button2.addEventListener('click', () => {
-        handleSticks('p2BundleAmount')
-        enableButtons(button2)
-        button2.disabled = true
-    })
-    
-    button3.addEventListener('click', () => {
-        handleSticks('p1Bundle2Amount')
-        enableButtons(button3)
-        button3.disabled = true
-    })
-    
-    button4.addEventListener('click', () => {
-        handleSticks('p2Bundle2Amount')
-        enableButtons(button4)
-        button4.disabled = true
-    })
 
     //Breaks bundle(s) when they exceed max sticks
     function bundleBreak(bundle) {
@@ -179,15 +131,94 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    //Win condition logic
+    //Button Logic
+    //WIP
+    //Function for handling button disable/enable
+    function handleButtons(button){
+        //Button reset
+        button1.disabled = false
+        button2.disabled = false
+        button3.disabled = false
+        button4.disabled = false
+        
+    }
+    //Run handleButtons to initialize 
+    handleButtons(null)
+
+    //Event listeners for buttons
+    button1.addEventListener('click', () => {
+        handleSticks('p1BundleAmount')
+        handleButtons(button1)
+        
+    })
+    
+    button2.addEventListener('click', () => {
+        handleSticks('p2BundleAmount')
+        console.log(currentPlayer)
+        handleButtons(button2)
+        
+    })
+    
+    button3.addEventListener('click', () => {
+        handleSticks('p1Bundle2Amount')
+        console.log(currentPlayer)
+        handleButtons(button3)
+        
+    })
+    
+    button4.addEventListener('click', () => {
+        handleSticks('p2Bundle2Amount')
+        console.log(currentPlayer)
+        handleButtons(button4)
+        
+    })
+
+    //Split button logic
     
 
-    //Button Logic
+    //Win condition logic
+    function winCondition(player) {
+        //Hide old div
+        let turnDiv2 = document.getElementById('turnDiv')
+        turnDiv2.hidden = true
+        //New div
+        let winDiv = document.getElementById('winDiv')
+        winDiv = document.createElement('div')
+        winDiv.innerHTML = `${player} wins!`
+        winDiv.setAttribute('class', 'd-flex flex-column fs-4 text-center')
+        winDiv.setAttribute('z-index', '1')
+        winDiv.style.color = "red"
+        turnSec.append(winDiv)
+        //New button for reset
+        let resetButton = document.getElementById('reset')
+        resetButton = document.createElement('button')
+        resetButton.innerHTML = `Reset`
+        resetButton.setAttribute('id', 'reset')
+        resetButton.setAttribute('class', 'btn')
+        resetButton.setAttribute('style', 'background: white')
+        winDiv.append(resetButton)
+
+        //reload handle
+        function reload(){
+            window.location.reload()
+        }
+
+        resetButton.addEventListener('click', () => {
+            reload()
+        })
+
+        button1.disabled = true
+        button2.disabled = true
+        button3.disabled = true
+        button4.disabled = true
+    }
+    
+
+    //Info button
     let footer = document.getElementById('pageFoot')
     let infoButton = document.getElementById('infoButton')
     infoButton.addEventListener('click', () => {
         let infoDiv = document.getElementById('gameInfo')
-        
         if(infoDiv){
             footer.removeChild(infoDiv)
         } else {
