@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let button4 = document.getElementById('p2Bundle2Btn')
 
 
-    //Function for showing amount of sticks
+    //Function for showing amount of sticks in each bundle
     function handleBundles() {
         for (let bundle in stickBundle) {
             let textTag = document.getElementById(`${bundle}`)
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     handleBundles()
 
-    //Function to check for changes in stick amount
+    //Function that will check for changes in stick amount and run turn switching function
     function stickCheck() {
         for (let bundle in stickBundle) {
             if(stickBundle[bundle] !== prevBundleAmount[bundle]){
@@ -101,12 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
         turnDisplay()
     }
 
-
     
     //Function for adding sticks
     //Store variable for current selected amount
     let currentBundle = null
-
     function handleSticks(bundle) {
         if (currentBundle === null) {
             currentBundle = bundle
@@ -118,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-
     //Breaks bundle(s) when they exceed max sticks
     function bundleBreak(bundle) {
         let buttonID = bundleButtonID(bundle)
@@ -131,49 +128,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    //Button Logic
-    //WIP
-    //Function for handling button disable/enable
-    function handleButtons(button){
-        //Button reset
-        button1.disabled = false
-        button2.disabled = false
-        button3.disabled = false
-        button4.disabled = false
-        
-    }
-    //Run handleButtons to initialize 
-    handleButtons(null)
+    
 
     //Event listeners for buttons
     button1.addEventListener('click', () => {
         handleSticks('p1BundleAmount')
-        handleButtons(button1)
+        
         
     })
     
     button2.addEventListener('click', () => {
         handleSticks('p2BundleAmount')
-        console.log(currentPlayer)
-        handleButtons(button2)
+        
         
     })
     
     button3.addEventListener('click', () => {
         handleSticks('p1Bundle2Amount')
-        console.log(currentPlayer)
-        handleButtons(button3)
+        
         
     })
     
     button4.addEventListener('click', () => {
         handleSticks('p2Bundle2Amount')
-        console.log(currentPlayer)
-        handleButtons(button4)
+        
         
     })
 
-    //Split button logic
     
 
     //Win condition logic
